@@ -17,25 +17,21 @@ public class MenuController {
 
     private final MenuService menuService;
 
-    // ✅ Create
     @PostMapping
     public ResponseEntity<PostMenuResponseDto> createMenu(@RequestBody PostMenuRequestDto dto) {
         return ResponseEntity.ok(menuService.createMenu(dto));
     }
 
-    // ✅ Read - 단건
     @GetMapping("/{id}")
     public ResponseEntity<MenuResponseDto> getMenu(@PathVariable Long id) {
         return ResponseEntity.ok(menuService.getMenuById(id));
     }
 
-    // ✅ Read - 특정 레스토랑의 메뉴
     @GetMapping("/restaurant/{restaurantId}")
     public ResponseEntity<List<MenuResponseDto>> getMenusByRestaurant(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(menuService.getMenusByRestaurantId(restaurantId));
     }
 
-    // ✅ 가격 필터링
     @GetMapping("/filter")
     public ResponseEntity<List<MenuResponseDto>> getMenusByPriceRange(
             @RequestParam Double minPrice,
@@ -44,14 +40,12 @@ public class MenuController {
         return ResponseEntity.ok(menuService.getMenusByPriceRange(minPrice, maxPrice));
     }
 
-    // ✅ Update
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateMenu(@PathVariable Long id, @RequestBody PostMenuRequestDto dto) {
         menuService.updateMenu(id, dto);
         return ResponseEntity.noContent().build();
     }
 
-    // ✅ Delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
         menuService.deleteMenu(id);

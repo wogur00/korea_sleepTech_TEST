@@ -22,7 +22,6 @@ public class MenuService {
     private final MenuRepository menuRepository;
     private final RestaurantRepository restaurantRepository;
 
-    // Create - 특정 Restaurant에 Menu 추가
     public PostMenuResponseDto createMenu(PostMenuRequestDto dto) {
         Restaurant restaurant = restaurantRepository.findById(dto.getRestaurantId())
                 .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
@@ -50,7 +49,6 @@ public class MenuService {
                 .build();
     }
 
-    // Read - 특정 메뉴 단건 조회
     public MenuResponseDto getMenuById(Long id) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Menu not found"));
@@ -63,7 +61,6 @@ public class MenuService {
                 .build();
     }
 
-    // Read - 특정 Restaurant에 속한 전체 메뉴 조회
     public List<MenuResponseDto> getMenusByRestaurantId(Long restaurantId) {
         return menuRepository.findAllByRestaurantId(restaurantId)
                 .stream()
@@ -76,7 +73,6 @@ public class MenuService {
                 .collect(Collectors.toList());
     }
 
-    // Update
     public void updateMenu(Long id, PostMenuRequestDto dto) {
         Menu menu = menuRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Menu not found"));
@@ -92,7 +88,6 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
-    // Delete
     public void deleteMenu(Long id) {
         if (!menuRepository.existsById(id)) {
             throw new EntityNotFoundException("Menu not found");
@@ -100,7 +95,6 @@ public class MenuService {
         menuRepository.deleteById(id);
     }
 
-    // 가격 필터링
     public List<MenuResponseDto> getMenusByPriceRange(Double min, Double max) {
         return menuRepository.findAllByPriceBetween(min, max)
                 .stream()

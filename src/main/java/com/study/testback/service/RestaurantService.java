@@ -20,7 +20,6 @@ public class RestaurantService {
 
     private final RestaurantRepository restaurantRepository;
 
-    // Create
     public PostRestaurantResponseDto createRestaurant(PostRestaurantRequestDto dto) {
         Restaurant restaurant = Restaurant.builder()
                 .name(dto.getName())
@@ -38,7 +37,6 @@ public class RestaurantService {
                 .build();
     }
 
-    // Read 단건
     public RestaurantResponseDto getRestaurantById(Long id) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
@@ -51,7 +49,6 @@ public class RestaurantService {
                 .build();
     }
 
-    // Read 전체 (페이징)
     public Page<RestaurantResponseDto> getAllRestaurants(Pageable pageable) {
         return restaurantRepository.findAll(pageable)
                 .map(r -> RestaurantResponseDto.builder()
@@ -62,7 +59,6 @@ public class RestaurantService {
                         .build());
     }
 
-    // Update
     public void updateRestaurant(Long id, PostRestaurantRequestDto dto) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
@@ -74,7 +70,6 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
-    // Delete
     public void deleteRestaurant(Long id) {
         if (!restaurantRepository.existsById(id)) {
             throw new EntityNotFoundException("Restaurant not found");
@@ -82,7 +77,6 @@ public class RestaurantService {
         restaurantRepository.deleteById(id);
     }
 
-    // 지역 필터
     public List<RestaurantResponseDto> getRestaurantsByRegion(String address) {
         return restaurantRepository.findAllByAddressContaining(address)
                 .stream()

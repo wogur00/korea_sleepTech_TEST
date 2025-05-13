@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.study'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // 웹 애플리케이션 개발 (Controller)
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // JPA를 이용한 데이터베이스 연결
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // 유효성 검사
+    implementation 'jakarta.validation:jakarta.validation-api:3.1.0'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
+
+    // MySQL 연결
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 롬복 연결
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
